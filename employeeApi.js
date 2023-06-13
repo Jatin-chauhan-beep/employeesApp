@@ -64,7 +64,6 @@ app.get("/svr/employees",(req,res)=>{
     else {
       res.send(result.rows);
     }
-    client.end();
   });
 });
 
@@ -76,7 +75,6 @@ app.get("/svr/employees/department/:department",(req,res)=>{
         else {
             res.send(result.rows);
         }
-        client.end();
     });
 })
 
@@ -88,7 +86,6 @@ app.get("/svr/employees/designation/:designation",(req,res)=>{
         else {
             res.send(result.rows);
         }
-        client.end();
     });
 });
 
