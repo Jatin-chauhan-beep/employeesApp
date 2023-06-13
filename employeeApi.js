@@ -15,13 +15,6 @@ next();
 });
 const port = process.env.PORT||2410;
 app.listen(port, () => console.log(`Listening on port ${port}!`));
-let mysql=require("mysql");
-let connData={
-    host : "localhost",
-    user : "root",
-    password:"",
-    database:"testdb3",
-};
 
 const { Client }=require("pg"); 
 const client = new Client({
@@ -89,7 +82,6 @@ app.get("/svr/employees/department/:department",(req,res)=>{
 
 app.get("/svr/employees/designation/:designation",(req,res)=>{
     let dep=req.params.designation;
-    let connection=mysql.createConnection(connData);
     let sql="SELECT * FROM employees WHERE designation=$1";
     client.query(sql,[dep],(err,result)=>{
         if(err) res.status(404).send(err);
@@ -103,7 +95,6 @@ app.get("/svr/employees/designation/:designation",(req,res)=>{
 app.post("/svr/employees",(req,res)=>{
     let body=Object.values(req.body);
     console.log(body);
-    let connection=mysql.createConnection(connData);
     let sql=`INSERT INTO employees(empCode, name, department, designation, salary, gender) VALUES ($1,$2,$3,$4,$5,$6)`;
     client.query(sql,body,(err,result)=>{
         if(err) res.status(404).send(err);
@@ -114,7 +105,6 @@ app.post("/svr/employees",(req,res)=>{
 app.put("/svr/employees/:empCode",(req,res)=>{
     let body=req.body;
     let id=+req.params.empCode;
-    let connection=mysql.createConnection(connData);
     let sql="UPDATE employees SET name = $1, department = $2, designation = $3, salary = $4, gender=$5 WHERE empCode =$6";
     client.query(sql,[body.name,body.department,body.designation,body.salary,body.gender,id],(err)=>{
         if(err) res.status(404).send(err);
