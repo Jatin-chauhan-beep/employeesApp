@@ -19,10 +19,10 @@ app.listen(port, () => console.log(`Listening on port ${port}!`));
 const { Client }=require("pg"); 
 const client = new Client({
 user: "postgres",
-password: "employeeApi@123.", 
+password: "EmployeeApp@123", 
 database: "postgres",
 port: 5432,
-host: "db.qpopdmyafrjvozzstxqv.supabase.co",
+host: "db.drdhgvscnbtukqgrcdrq.supabase.co",
 ssl: { rejectUnauthorized: false },
 }); 
 client.connect(function (res, error) {
@@ -99,19 +99,19 @@ app.post("/svr/employees",(req,res)=>{
     });
 });
 
-app.put("/svr/employees/:empCode",(req,res)=>{
+app.put("/svr/employees/:empcode",(req,res)=>{
     let body=req.body;
-    let id=+req.params.empCode;
-    let sql="UPDATE employees SET name = $1, department = $2, designation = $3, salary = $4, gender=$5 WHERE empCode =$6";
+    let id=+req.params.empcode;
+    let sql="UPDATE employees SET name = $1, department = $2, designation = $3, salary = $4, gender=$5 WHERE empcode =$6";
     client.query(sql,[body.name,body.department,body.designation,body.salary,body.gender,id],(err)=>{
         if(err) res.status(404).send(err);
         else res.send(body);
     });
 });
 
-app.delete("/svr/employees/:empCode",(req,res)=>{
-    let id=+req.params.empCode;
-    let sql="DELETE FROM employees WHERE empCode=$1";
+app.delete("/svr/employees/:empcode",(req,res)=>{
+    let id=+req.params.empcode;
+    let sql="DELETE FROM employees WHERE empcode=$1";
     client.query(sql,[id],(err)=>{
         if(err) res.status(404).send(err);
         else res.send("deleted");
