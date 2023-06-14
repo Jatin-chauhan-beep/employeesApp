@@ -54,7 +54,7 @@ app.get("/svr/employees",(req,res)=>{
     if (params.length === 0) {
       sql += " WHERE gender = $1";
     } else {
-      sql += " AND gender = $2";
+      sql += " AND gender = $3";
     }
     params.push(gender);
   }
